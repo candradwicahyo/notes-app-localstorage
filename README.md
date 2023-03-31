@@ -1,6 +1,6 @@
 # notes app localstorage
 
-dibuat dengan menggunakan html, css dan javascript. program ini berguna untuk mencatat sesuatu untuk sementara waktu. dan di program ini, kalian bisa melakukan tambah data, ubah data, hapus data, mencari data dan menghapus semua data.
+dibuat dengan menggunakan html, css dan javascript. program ini berguna untuk mencatat sesuatu untuk sementara waktu. dan di program ini, kalian bisa melakukan tambah data, ubah data, hapus data, mencari data dan menghapus semua data sekaligus.
 
 kode sudah saya sertakan dengan komentar supaya kalian para programmer pemula bisa mempelajarinya.
 
