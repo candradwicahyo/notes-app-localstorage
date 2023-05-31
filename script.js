@@ -45,8 +45,8 @@ window.onload = () => {
   
   function clearValue() {
     // bwrsihkan semua value input
-    inputTitle.value = '';
-    inputDescription.value = '';
+    const forms = document.querySelectorAll('.form');
+    forms.forEach(form => form.reset());
   }
   
   // ketika tombol submit ditekan, jalankan fungsi addData()
@@ -60,18 +60,13 @@ window.onload = () => {
     */
     if (modal.textContent.includes('add')) {
       // value input
-      const title = inputTitle.value.trim();
-      const description = inputDescription.value.trim();
+      const data = getInputValues();
       // lakukan validasi terlebih dahulu ke setiap input
-      if (validate(title, description) == true) {
-        // jadikan value input menjadi sebuah objek
-        const data = { title: title, description: description }
+      if (validate(data) == true) {
         // push objek dari variabel "data" kedalam variabel "tasks"
-        tasks.push(data);
+        tasks.unshift(data);
         // simpan kedalam localstorage
         saveToLocalStorage();
-        // jalankan fungsi updateUI()
-        updateUI(data);
         // jalankan fungsi loadData()
         loadData();
         // tampilkan pesan bahwa "data berhasil ditambahkan"
@@ -82,7 +77,14 @@ window.onload = () => {
     }
   }
   
-  function validate(title, description) {
+  function getInputValues() {
+    return {
+      title: inputTitle.value.trim(),
+      description: inputDescription.value.trim()
+    };
+  }
+  
+  function validate({ title, description }) {
     // jika semua input masih kosong
     if (!title && !description) return alerts('error', 'field`s was empty!');
     // jika masih ada input yang masih kosong
@@ -176,28 +178,25 @@ window.onload = () => {
       */
       if (modal.textContent.includes('edit')) {
         // value input
-        const title = inputTitle.value.trim();
-        const description = inputDescription.value.trim();
+        const data = getInputValues();
         // validasi terlebih dahulu ke setiap input
-        if (validate(title, description)) {
+        if (validate(data)) {
           /*
             ubah isi array di index yang diambil dari isi variabel "id"
             dengan value dari "input title" dan "input description"
           */
-          tasks[id].title = title;
-          tasks[id].description = description;
+          tasks[id] = data;
           // simpan kedalam localstorage 
           saveToLocalStorage();
           // berikan pesan bahwa "data berhasil diubah atau diedit"
           alerts('success', 'Data has been updated!');
-          /*
-            jadikan variabel "tasks" dan parameter "id" sebagai "null"
-            supaya tidak menduplikat data lainnya
-          */
-          tasks = null;
-          id = null;
           // jalankan fungai loadData()
           loadData();
+          /*
+            jadikan parameter "id" sebagai "null"
+            supaya tidak menduplikat data lainnya
+          */
+          id = null;
         }
       }
     });
@@ -280,7 +279,7 @@ window.onload = () => {
         // jalankan fungsi loadData()
         loadData();
       }
-    })
+    });
   });
   
 }
